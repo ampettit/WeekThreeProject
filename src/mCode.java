@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-
+/*
 public class mCode implements mCodeInterface {
 	private MorseNode root;
 	
@@ -120,3 +120,4 @@ public class mCode implements mCodeInterface {
 		
 	}
 }
+*/

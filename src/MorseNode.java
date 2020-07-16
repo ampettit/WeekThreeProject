@@ -1,38 +1,39 @@
+	/*
 public class MorseCodeTree {
-	/**
+
 	 * 
 	 * @author rnjmur
 	 * 
 	 *	Morse Code Tree for storing Morse Code letters and to parse
 	 *	tree to get Morse Code from letter or letter from Morse Code
-	 */
+
     private class Node {
-    	/** a letter of the alphabet */
+    	/** a letter of the alphabet 
         public char letter = '\0';
-        /** reference to the left child */
+         reference to the left child 
         public Node left;
-        /** reference to the right child */
+        reference to the right child 
         public Node right;
         
         public Node() { }  // Default constructor
-        /** Constructor with letter to add */
+        /** Constructor with letter to add 
         public Node(char letter) { this.letter = letter; }
     }
-    /** set root node to empty */
+    * set root node to empty 
     private Node root = new Node();
     
-    /** value of letter if empty (not set) */
+    value of letter if empty (not set) 
     public static final char EMPTY = ' ';
 
     public MorseCodeTree() { }  // Default Constructor
     
     public void add(char letter, String code) {
-    	/**
+    	
     	 * Add an entry to the Tree based on the Morse code passed in
     	 * 
     	 * @param: char		The letter to add into the tree
     	 * @param: String	The morse code to use for placing the letter into the tree
-    	 */
+    	 
     	char[] dotOrDash = code.toCharArray();
     	Node current = root;
     	
@@ -110,4 +111,5 @@ public class MorseCodeTree {
     	}
     	return null;
     }
-}
+}	 
+*/
