@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 public class MorseCodeTree {
 	/**
 	 * 
@@ -6,7 +9,8 @@ public class MorseCodeTree {
 	 *	Morse Code Tree for storing Morse Code letters and to parse
 	 *	tree to get Morse Code from letter or letter from Morse Code
 	 */
-    private class Node {
+	public static Scanner scnr = new Scanner(System.in);
+    private static class Node {
     	/** a letter of the alphabet */
         public char letter = '\0';
         /** reference to the left child */
@@ -19,7 +23,7 @@ public class MorseCodeTree {
         public Node(char letter) { this.letter = letter; }
     }
     /** set root node to empty */
-    private Node root = new Node();
+    public static Node root = new Node();
     
     /** value of letter if empty (not set) */
     public static final char EMPTY = ' ';
@@ -67,7 +71,7 @@ public class MorseCodeTree {
     	}
     }
     
-    public char getLetter(String code) {
+    public static char getLetter(String code) {
     	/**
     	 * Parse Tree to find the letter from the code
     	 * 
@@ -102,7 +106,7 @@ public class MorseCodeTree {
     	return ' ';
     }
     
-    public String getCode(char letter) {
+    public static String getCode(char letter) {
     	String leftSearch = getCode(root.left, letter, new String("."));
     	if (leftSearch != null) { return leftSearch; }
     	String rightSearch = getCode(root.right, letter, new String("-"));
@@ -110,7 +114,7 @@ public class MorseCodeTree {
     	return null;
     }
     
-    private String getCode(Node current, char letter, String morsecode) {
+    private static String getCode(Node current, char letter, String morsecode) {
     	if (current.letter == letter) {
     		return morsecode;
     	} else {
@@ -122,5 +126,36 @@ public class MorseCodeTree {
     		}
     	}
     	return null;
+    }
+
+	private void readTree() {
+			Scanner scnr = null;
+			try {
+				scnr = new Scanner(new File("Morse_Code.txt"));
+			} catch(FileNotFoundException exception) {
+				System.out.println("File not found");
+			}
+			while (scnr.hasNextLine()) {
+				String data = scnr.nextLine().trim();
+				if(data.length() > 0) {
+					add(data.charAt(0), data.substring(1).trim());
+				}
+			}
+			scnr.close();
+		}
+    public static void main(String[] args){
+    		System.out.println("What would you like to be translated? \n");
+    		String choice = scnr.next();
+    		MorseCodeTree mtree = new MorseCodeTree();
+    		if(choice.contains("-") || choice.contains(".")){
+    			for(int i = 0; i < choice.length() - 1; i++){
+        			System.out.println(MorseCodeTree.getLetter(choice));
+    			}
+    		}
+    		else{
+    			for(int i = 0; i < choice.length() - 1; i++){
+        			System.out.println(MorseCodeTree.getCode(choice.charAt(i)));
+    			}
+    		}
     }
 }
