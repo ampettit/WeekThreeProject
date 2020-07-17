@@ -1,3 +1,4 @@
+
 public class MorseCodeTree {
 	/**
 	 * 
@@ -103,24 +104,59 @@ public class MorseCodeTree {
     }
     
     public String getCode(char letter) {
-    	String leftSearch = getCode(root.left, letter, new String("."));
+/*    	String leftSearch = getCode(root.left, letter, new String("."));
     	if (leftSearch != null) { return leftSearch; }
     	String rightSearch = getCode(root.right, letter, new String("-"));
     	if (rightSearch != null) { return rightSearch; }
-    	return null;
+*/
+    	String search = getCode(root, letter, new String());
+    	if (!search.equals("")) { return search; }
+    	return "Code could not be returned - letter not found ";
     }
     
     private String getCode(Node current, char letter, String morsecode) {
+    	String ret_code = "";
     	if (current.letter == letter) {
-    		return morsecode;
+    		ret_code = morsecode;
     	} else {
     		if (current.left != null) {
-    			getCode(current.left, letter, (morsecode.concat(".")));
+    			String temp = getCode(current.left, letter, morsecode.concat("."));
+    			if (!temp.isEmpty()) { ret_code = temp; }
     		}
-    		else if (current.right != null) {
-    			getCode(current.right, letter, (morsecode.concat("-")));
+    		if (current.right != null) {
+    			String temp = getCode(current.right, letter, morsecode.concat("-"));
+    			if (!temp.isEmpty()) { ret_code = temp; }
     		}
     	}
-    	return null;
+    	
+    	return ret_code;
     }
+    
+/*    public String getCode(char letter) {
+    	
+    	String codereturn = null;
+    	Node current = root;
+    	
+    	Stack<Node> treeStack = new Stack<Node>();
+    	
+    	while (!treeStack.isEmpty()) {
+    		if (current.letter == letter) {
+    			return codereturn;
+    		} else if (current.left != null) {
+    			codereturn = codereturn.concat(".");
+    			treeStack.push(current);
+    			current = current.left;
+    		} else if (current.right != null) {
+    			codereturn = codereturn.concat("-");
+    			treeStack.push(current);
+    			current = current.right;
+    		} else {
+    			
+    			current = treeStack.pop();
+    		}
+    	}
+    	
+    	return "Letter Not Found\n";
+    }
+   */
 }
