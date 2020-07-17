@@ -1,14 +1,30 @@
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
-public class mCode implements mCodeInterface {
-	private MorseNode root;
-	
-	public mCode() {
-		root = new MorseNode();
-		readTree();
+public class mCode {
+/*	public static void main(String[] args) {
+		MorseCodeTree mtree = new MorseCodeTree();
+		
+		readTree(mtree);
+		
+		Scanner scrn = new Scanner(System.in);
+		
+		String choice = scrn.next();
+		char[] choice_arr = choice.toCharArray();
+		if (choice.contains('.')) {
+			
+		}
+		for (int i=0; i < choice_arr.length; ++i) {
+			
+		}
+		
+		System.out.print(mtree.getCode('a'));
+		System.out.print(mtree.getLetter("..-"));
+		
 	}
-	private void readTree() {
+	
+	private static void readTree(MorseCodeTree mtree) {
 		Scanner scnr = null;
 		try {
 			scnr = new Scanner(new File("Morse_Code.txt"));
@@ -18,105 +34,57 @@ public class mCode implements mCodeInterface {
 		while (scnr.hasNextLine()) {
 			String data = scnr.nextLine().trim();
 			if(data.length() > 0) {
-				add(data.substring(1).trim(), data.charAt(0));
+				mtree.add(data.charAt(0), data.substring(1).trim());
+			}
+		}
+		scnr.close();
+	}
+	*/
+	
+	private static void readTree(MorseCodeTree mtree) {
+		Scanner scnr = null;
+		try {
+			scnr = new Scanner(new File("Morse_Code.txt"));
+		} catch(FileNotFoundException exception) {
+			System.out.println("File not found");
+		}
+		while (scnr.hasNextLine()) {
+			String data = scnr.nextLine().trim();
+			if(data.length() > 0) {
+				mtree.add(data.charAt(0), data.substring(1).trim());
 			}
 		}
 		scnr.close();
 	}
 	
-	private void add(String code, char letter) {
-		MorseNode current = root;
-		String signal = " ";
-		
-		for (int i = 0; i < code.length(); i++) {
-            signal = code.substring(i, i + 1);
-            if (signal.equals(".")) {
-                if (current.getLeft() != null) {
-                    current = current.getLeft();
-                } else {
-                    current.setLeft(new MorseNode());
-                    current = current.getLeft();
-                }
-            } else {
-                if (current.getRight() != null) {
-                    current = current.getRight();
-                } else {
-                    current.setRight(new MorseNode());
-                    current = current.getRight();
-                }
-            }
-        }
-        current.setLetter(letter);
-    }
+	public static void main(String[] args){
+		MorseCodeTree mtree = new MorseCodeTree();
 	
-	private void printInorder(MorseNode current) {
-		if(current != null) {
-			printInorder(current.getLeft());
-			System.out.println(current.getLetter());
-			printInorder(current.getRight());
-		}
-	}
-	public String decode(String str) {
-        String signal = "";
-        StringBuffer result = new StringBuffer("");
-        MorseNode current = root;
-         
-        for (int i = 0; i < str.length(); i++) {
-            signal = str.substring(i, i + 1);
-            if (signal.equals(".")) {
-                if (current.getLeft() != null) {
-                    current = current.getLeft();
-                } else {
-                    current.setLeft(new MorseNode());
-                    current = current.getLeft();
-                }
-            } else if (signal.equals("-")) {
-                if (current.getRight() != null) {
-                    current = current.getRight();
-                } else {
-                    current.setRight(new MorseNode());
-                    current = current.getRight();
-                }
-            } else {
-                result = result.append(current.getLetter());
-                current = root;
-            }
-        }
-        result = result.append(current.getLetter());
- 
-        return result.toString();
-    }
-	public String encode(String str) {
-        MorseNode current = root;
-        String result = "";
-        String s = "";
-        char ltr;
-         
-        for (int i = 0; i < str.length(); i++) {
-            ltr = str.charAt(i);
-            result = searchTree(current, ltr, s);
-            }
-        return result;
-    }
-	public String searchTree(MorseNode current, char ltr, String s) {
-        char temp = current.getLetter();  //for debugging purposes
- 
-        if (current.getLetter() == ltr) { 
-            return s;
-        } else {
-            if (current.getLeft() != null) {
-                return searchTree(current.getLeft(), ltr, s + ".");
-            }
-            if (current.getRight() != null) {
-                return searchTree(current.getRight(), ltr, s + "-");
-            }       
-            return s;
-        }
-    }
-	@Override
-	public void inOrderPrint() {
-		MorseNode current = root;
-		printInorder(current);
+		readTree(mtree);
+	
+		Scanner scnr = new Scanner(System.in);
+	
+		System.out.println("What would you like to be translated? \n");
+//		String choice = scnr.next();
 		
+
+/*		if(choice.contains("-") || choice.contains(".")){
+			for(int i = 0; i < choice.length() - 1; i++){
+				System.out.println(choice);
+    			System.out.println(mtree.getLetter("..-"));
+			}
+		}
+		else{
+			for(int i = 0; i < choice.length() - 1; i++){
+    			System.out.println(mtree.getCode('a'));
+			}
+		}
+*/		
+		System.out.print("Code == ");
+		System.out.println(mtree.getLetter("..-"));
+		System.out.print("Letter == ");
+		System.out.println(mtree.getCode('u'));
+		
+		scnr.close();
 	}
 }
