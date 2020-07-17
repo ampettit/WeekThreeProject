@@ -1,9 +1,6 @@
 
 public class MorseCodeTree {
 	/**
-	 * 
-	 * @author rnjmur
-	 * 
 	 *	Morse Code Tree for storing Morse Code letters and to parse
 	 *	tree to get Morse Code from letter or letter from Morse Code
 	 */
@@ -21,9 +18,6 @@ public class MorseCodeTree {
     }
     /** set root node to empty */
     private Node root = new Node();
-    
-    /** value of letter if empty (not set) */
-    public static final char EMPTY = ' ';
 
     public MorseCodeTree() { }  // Default Constructor
     
@@ -42,6 +36,7 @@ public class MorseCodeTree {
     	 * the code
     	 */
     	for(int i=0; i < dotOrDash.length; ++i) {
+    		// If this is the last dot or dash then set the letter in the Node
     		if (i == dotOrDash.length - 1) {
     			switch(dotOrDash[i]) {
         		case('.'):
@@ -53,7 +48,9 @@ public class MorseCodeTree {
         			else { current.right.letter = letter; }
     				break;
     			}
-    		} else {
+    		} 
+    		// If not the last dot or dash continue down the tree
+    		else {
     			switch(dotOrDash[i]) {
         		case('.'):
         			if (current.left == null) { current.left = new Node(); }
@@ -75,13 +72,16 @@ public class MorseCodeTree {
     	 * @param: String	Morse code to find the equivalent letter
     	 * @return: char	return letter found in tree
     	 */
+    	// split passed String into a Char Array
     	char[] dotOrDash = code.toCharArray();
+    	// create a copy of root to use for moving through the Nodes
     	Node current = root;
     	
     	/**
     	 * Loop through Tree looking for letter based on the given String
     	 */
     	for(int i=0; i < dotOrDash.length; ++i) {
+    		// At the last dot or dash return the letter
     		if (i == dotOrDash.length - 1) {
     			switch(dotOrDash[i]) {
         		case('.'):
@@ -89,7 +89,7 @@ public class MorseCodeTree {
     			case('-'):
     				return current.right.letter;
     			}
-    		} else {
+    		} else {  // If not the last dot or dash continue through Nodes
     			switch(dotOrDash[i]) {
         		case('.'):
         			current = current.left;
@@ -100,63 +100,59 @@ public class MorseCodeTree {
     			}
     		}
     	}
+    	// Return a space if nothing is found
     	return ' ';
     }
     
     public String getCode(char letter) {
-/*    	String leftSearch = getCode(root.left, letter, new String("."));
-    	if (leftSearch != null) { return leftSearch; }
-    	String rightSearch = getCode(root.right, letter, new String("-"));
-    	if (rightSearch != null) { return rightSearch; }
-*/
+    	/**
+    	 * Wrapper for the method to look for the code that corresponds to the
+    	 * given letter
+    	 * 
+    	 * @param: char		the letter to get the code conversion for
+    	 * @return: String	the code conversion
+    	 */
     	String search = getCode(root, letter, new String());
+    	// If the String returned is not empty then return the String
     	if (!search.equals("")) { return search; }
+    	// If the String is empty then return this String
     	return "Code could not be returned - letter not found ";
     }
     
     private String getCode(Node current, char letter, String morsecode) {
+    	/**
+    	 * Recursive method to search the MorseCodeTree for the given letter then
+    	 * return the proper code sequence
+    	 * 
+    	 * @param: Node		The current Node to check
+    	 * @param: char		The letter searching for
+    	 * @param: String	the code for the current Node
+    	 * 
+    	 * @return: String	If letter is found return the code
+    	 */
+    	// Create an empty String to return if letter is not matched
     	String ret_code = "";
+    	// If the letter at the current Node matches the one being serched for
+    	// then return the current code conversion
     	if (current.letter == letter) {
     		ret_code = morsecode;
-    	} else {
+    	} else {  // If no match then continue searching
+    		// If there is a left branch search it for a match
     		if (current.left != null) {
+    			// Store recursive call into a temp String
     			String temp = getCode(current.left, letter, morsecode.concat("."));
+    			// If the returned String is not empty then return the code
     			if (!temp.isEmpty()) { ret_code = temp; }
     		}
+    		// If there is a right branch search it for a match
     		if (current.right != null) {
+    			// Store recursive call into a temp String
     			String temp = getCode(current.right, letter, morsecode.concat("-"));
+    			// If the returned String is not empty then return the code
     			if (!temp.isEmpty()) { ret_code = temp; }
     		}
     	}
-    	
+    	// return the ret_code String
     	return ret_code;
     }
-    
-/*    public String getCode(char letter) {
-    	
-    	String codereturn = null;
-    	Node current = root;
-    	
-    	Stack<Node> treeStack = new Stack<Node>();
-    	
-    	while (!treeStack.isEmpty()) {
-    		if (current.letter == letter) {
-    			return codereturn;
-    		} else if (current.left != null) {
-    			codereturn = codereturn.concat(".");
-    			treeStack.push(current);
-    			current = current.left;
-    		} else if (current.right != null) {
-    			codereturn = codereturn.concat("-");
-    			treeStack.push(current);
-    			current = current.right;
-    		} else {
-    			
-    			current = treeStack.pop();
-    		}
-    	}
-    	
-    	return "Letter Not Found\n";
-    }
-   */
 }
