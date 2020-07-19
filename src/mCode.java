@@ -34,7 +34,7 @@ public class mCode {
 		if(choice.contains("-") || choice.contains(".")){
 			String[] choice_split = choice.split(" ");
 			for(int i = 0; i < choice_split.length; i++){
-    			System.out.println(mtree.getLetter(choice_split[i]));
+    			System.out.print(mtree.getLetter(choice_split[i]));
 			}
 		}
 		else{
